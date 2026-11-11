@@ -370,3 +370,4 @@ export const NotionWorkspaceMockup: React.FC = () => {
     </div>
   );
 };
+

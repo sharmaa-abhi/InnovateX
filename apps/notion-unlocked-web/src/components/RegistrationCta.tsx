@@ -79,3 +79,4 @@ export const RegistrationCta: React.FC<RegistrationCtaProps> = ({ onRegisterClic
     </section>
   );
 };
+

@@ -157,3 +157,4 @@ export const EventInfoStrip: React.FC = () => {
     </section>
   );
 };
+

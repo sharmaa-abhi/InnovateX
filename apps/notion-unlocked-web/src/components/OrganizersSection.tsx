@@ -155,3 +155,4 @@ export const OrganizersSection: React.FC = () => {
     </section>
   );
 };
+

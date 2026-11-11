@@ -225,3 +225,4 @@ export const AgendaSection: React.FC = () => {
     </section>
   );
 };
+

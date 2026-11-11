@@ -4,8 +4,8 @@
   "private": true,
   "description": "Notion Unlocked × Nerds Room Event Workspace",
   "scripts": {
-    "dev": "npm --prefix apps/notion-unlocked-web run dev",
-    "build": "npm --prefix apps/notion-unlocked-web run build",
-    "preview": "npm --prefix apps/notion-unlocked-web run preview"
+    "dev": "npm run --prefix apps/notion-unlocked-web dev",
+    "build": "npm run --prefix apps/notion-unlocked-web build",
+    "preview": "npm run --prefix apps/notion-unlocked-web preview"
   }
 }

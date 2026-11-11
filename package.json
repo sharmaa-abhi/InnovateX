@@ -1,0 +1,11 @@
+{
+  "name": "nerds-room-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Notion Unlocked × Nerds Room Event Workspace",
+  "scripts": {
+    "dev": "npm --prefix apps/notion-unlocked-web run dev",
+    "build": "npm --prefix apps/notion-unlocked-web run build",
+    "preview": "npm --prefix apps/notion-unlocked-web run preview"
+  }
+}

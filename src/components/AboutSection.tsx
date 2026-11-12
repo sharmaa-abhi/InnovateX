@@ -3,7 +3,7 @@ import { Sparkles, Layers, ChevronDown, ChevronRight, Terminal, Network, Lightbu
 import { EVENT_DATA } from '../data/eventData';
 
 export const AboutSection: React.FC = () => {
-  const [isToggleOpen, setIsToggleOpen] = useState(true);
+  const [isUniqueOpen, setIsUniqueOpen] = useState(true);
 
   return (
     <section id="about" className="py-20 sm:py-28 relative">
@@ -22,7 +22,7 @@ export const AboutSection: React.FC = () => {
           
           {/* Left Column (7 cols): Editorial Narrative */}
           <div className="lg:col-span-7 space-y-6">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-notion-text leading-[1.15]">
+            <h2 className="section-title leading-[1.15]">
               {EVENT_DATA.about.heading}
             </h2>
 
@@ -83,25 +83,33 @@ export const AboutSection: React.FC = () => {
               </div>
 
               {/* Notion Interactive Toggle Block */}
-              <div className="border border-notion-border/80 rounded-lg p-3 bg-[#FAF9F6]/60">
+              <div className="rounded-xl border border-notion-border/80 bg-[#FAF9F6]/60 p-2">
                 <button
                   type="button"
-                  onClick={() => setIsToggleOpen(!isToggleOpen)}
-                  className="w-full flex items-center justify-between text-xs font-semibold text-notion-text text-left hover:text-emerald-700 transition"
+                  aria-expanded={isUniqueOpen}
+                  aria-controls="edition-unique-details"
+                  onClick={() => setIsUniqueOpen((open) => !open)}
+                  className="flex min-h-12 w-full items-center justify-between rounded-lg px-3 text-left text-sm font-semibold text-notion-text transition hover:bg-white hover:text-emerald-700"
                 >
                   <span className="flex items-center gap-2">
-                    {isToggleOpen ? (
+                    {isUniqueOpen ? (
                       <ChevronDown className="w-4 h-4 text-notion-faint" />
                     ) : (
                       <ChevronRight className="w-4 h-4 text-notion-faint" />
                     )}
                     <span>What makes this edition unique?</span>
                   </span>
-                  <span className="text-[10px] font-mono text-notion-faint">toggle</span>
                 </button>
 
-                {isToggleOpen && (
-                  <div className="mt-3 pl-6 pr-2 text-xs text-notion-muted space-y-2 border-l border-emerald-400/40 ml-2 animate-fadeIn">
+                <div
+                  id="edition-unique-details"
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none ${
+                    isUniqueOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  }`}
+                  aria-hidden={!isUniqueOpen}
+                >
+                  <div className="min-h-0 overflow-hidden">
+                    <div className="mt-3 space-y-2 border-l border-emerald-400/40 pl-6 pr-2 text-sm text-notion-muted">
                     <p>
                       • Live breakdown of actual production workspaces rather than abstract slides.
                     </p>
@@ -111,8 +119,9 @@ export const AboutSection: React.FC = () => {
                     <p>
                       • In-person networking with the vibrant Nerds Room developer community at Paytm Office, Noida.
                     </p>
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Code snippet block (Nerds Room touch) */}
@@ -165,4 +174,3 @@ export const AboutSection: React.FC = () => {
     </section>
   );
 };
-

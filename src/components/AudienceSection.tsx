@@ -15,17 +15,17 @@ export const AudienceSection: React.FC = () => {
   const getIcon = (name: string) => {
     switch (name) {
       case 'Briefcase':
-        return <Briefcase className="w-5 h-5 text-blue-600" />;
+        return <Briefcase className="w-5 h-5 text-emerald-600" />;
       case 'Rocket':
-        return <Rocket className="w-5 h-5 text-rose-600" />;
+        return <Rocket className="w-5 h-5 text-emerald-600" />;
       case 'Layout':
-        return <Layout className="w-5 h-5 text-amber-600" />;
+        return <Layout className="w-5 h-5 text-emerald-600" />;
       case 'Code2':
         return <Code2 className="w-5 h-5 text-emerald-600" />;
       case 'Sparkles':
-        return <Sparkles className="w-5 h-5 text-purple-600" />;
+        return <Sparkles className="w-5 h-5 text-emerald-600" />;
       case 'Zap':
-        return <Zap className="w-5 h-5 text-indigo-600" />;
+        return <Zap className="w-5 h-5 text-emerald-600" />;
       default:
         return <Sparkles className="w-5 h-5 text-emerald-600" />;
     }
@@ -44,7 +44,7 @@ export const AudienceSection: React.FC = () => {
             <span className="text-xs font-mono text-notion-faint">// 04</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-notion-text">
+          <h2 className="section-title">
             Who Should Attend?
           </h2>
 
@@ -92,7 +92,7 @@ export const AudienceSection: React.FC = () => {
               {/* Bottom Card Pill */}
               <div className="mt-5 pt-3 border-t border-notion-border/60 flex items-center justify-between text-[11px] font-mono text-notion-muted">
                 <span>Value: High Leverage</span>
-                <span className="text-emerald-700 font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                <span className="text-emerald-700 font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-2 text-sm py-1">
                   <span>Explore</span>
                   <ArrowRight className="w-3 h-3" />
                 </span>
@@ -105,4 +105,3 @@ export const AudienceSection: React.FC = () => {
     </section>
   );
 };
-

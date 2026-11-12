@@ -82,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRegisterClick }) => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={onRegisterClick}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-neutral-900 text-white font-medium text-xs shadow-sm hover:bg-neutral-800 active:scale-[0.98] transition focus:ring-2 focus:ring-emerald-500/50"
+              className="btn-primary px-4 py-2 text-xs"
             >
               <span>Request to Join</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-nerd-green" />
@@ -95,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRegisterClick }) => {
               href={EVENT_DATA.meta.registrationUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-neutral-900 text-white font-medium text-xs"
+              className="btn-primary px-3 py-1.5 text-xs"
             >
               <span>Join</span>
               <ArrowUpRight className="w-3 h-3 text-nerd-green" />
@@ -104,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRegisterClick }) => {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-md border border-notion-border bg-white text-notion-text hover:bg-neutral-50 focus:outline-hidden"
+              className="btn-ghost rounded-md border border-notion-border bg-white p-2 text-notion-text hover:bg-neutral-50"
               aria-label="Toggle navigation menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -123,7 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRegisterClick }) => {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-md text-sm font-medium text-notion-text hover:bg-neutral-100"
+                className="btn-ghost block w-full rounded-md text-left font-medium"
               >
                 {link.label}
               </a>
@@ -139,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onRegisterClick }) => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-neutral-900 text-white font-medium text-sm shadow-sm"
+              className="btn-primary w-full px-4 py-2.5 text-sm"
             >
               <span>Request to Join on Luma</span>
               <ArrowUpRight className="w-4 h-4 text-nerd-green" />
@@ -150,4 +150,3 @@ export const Navbar: React.FC<NavbarProps> = ({ onRegisterClick }) => {
     </header>
   );
 };
-

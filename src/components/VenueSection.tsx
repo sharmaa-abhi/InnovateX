@@ -24,7 +24,7 @@ export const VenueSection: React.FC = () => {
             <span className="text-xs font-mono text-notion-faint">// 06</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-notion-text">
+          <h2 className="section-title">
             {EVENT_DATA.venueDetails.title}
           </h2>
 
@@ -210,4 +210,3 @@ export const VenueSection: React.FC = () => {
     </section>
   );
 };
-

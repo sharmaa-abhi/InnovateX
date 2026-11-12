@@ -192,7 +192,7 @@ export const ExperienceSection: React.FC = () => {
             <span className="text-xs font-mono text-notion-faint">// 02</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-notion-text">
+          <h2 className="section-title">
             What You'll Experience
           </h2>
 
@@ -286,4 +286,3 @@ export const ExperienceSection: React.FC = () => {
     </section>
   );
 };
-

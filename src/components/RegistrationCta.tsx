@@ -57,7 +57,7 @@ export const RegistrationCta: React.FC<RegistrationCtaProps> = ({ onRegisterClic
             target="_blank"
             rel="noopener noreferrer"
             onClick={onRegisterClick}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-emerald-500 text-neutral-950 font-bold text-base shadow-nerd-glow hover:bg-emerald-400 active:scale-[0.98] transition group focus:ring-4 focus:ring-emerald-500/40"
+            className="btn-primary w-full sm:w-auto px-8 py-4 group"
           >
             <span>Request to Join</span>
             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -79,4 +79,3 @@ export const RegistrationCta: React.FC<RegistrationCtaProps> = ({ onRegisterClic
     </section>
   );
 };
-

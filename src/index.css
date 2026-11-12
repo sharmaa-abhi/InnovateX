@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-neutral-900 px-5 py-3 text-sm text-white shadow-sm hover:bg-neutral-800;
+  }
+
+  .btn-secondary {
+    @apply btn border border-notion-border bg-white px-5 py-3 text-sm text-notion-text shadow-xs hover:border-notion-borderHover hover:bg-[#F9F8F5];
+  }
+
+  .btn-outline {
+    @apply btn border border-neutral-700 bg-transparent px-5 py-3 text-sm text-white hover:border-neutral-500 hover:bg-neutral-800;
+  }
+
+  .btn-ghost {
+    @apply btn px-3 py-2 text-sm text-notion-muted hover:bg-neutral-100 hover:text-notion-text;
+  }
+
+  .btn-text {
+    @apply btn rounded-md px-2 py-2 text-sm text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800;
+  }
+
+  .section-title {
+    @apply text-3xl font-extrabold tracking-tight text-notion-text sm:text-4xl lg:text-5xl;
+  }
+
+  .body-copy {
+    @apply text-base leading-relaxed text-notion-muted sm:text-lg;
+  }
+
+  .supporting-copy {
+    @apply text-sm leading-relaxed text-notion-muted;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -12,6 +50,11 @@
     background-color: #FAF9F6;
     color: #191919;
     overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid #059669;
+    outline-offset: 3px;
   }
 
   /* Custom Notion-style scrollbar */
@@ -76,4 +119,3 @@
     scroll-behavior: auto !important;
   }
 }
-

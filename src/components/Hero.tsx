@@ -79,7 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={onRegisterClick}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-neutral-900 text-white font-semibold text-sm shadow-md hover:bg-neutral-800 active:scale-[0.98] transition group focus:ring-2 focus:ring-emerald-500"
+            className="btn-primary w-full sm:w-auto px-6 py-3.5 group"
           >
             <span>Request to Join</span>
             <ArrowUpRight className="w-4 h-4 text-nerd-green transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -87,7 +87,7 @@ export const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
 
           <a
             href="#about"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-notion-border text-notion-text font-medium text-sm shadow-xs hover:bg-[#F9F8F5] hover:border-notion-borderHover active:scale-[0.98] transition"
+            className="btn-secondary w-full sm:w-auto px-6 py-3.5"
           >
             <span>Explore the Event</span>
             <ArrowDown className="w-4 h-4 text-notion-faint" />
@@ -108,4 +108,3 @@ export const Hero: React.FC<HeroProps> = ({ onRegisterClick }) => {
     </section>
   );
 };
-

@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Clock,
-  Sparkles,
-  Coffee,
-  Users,
-  MessageCircleQuestion,
-  Layers,
-  CheckCircle2,
-  CalendarCheck,
-  Tag,
-  Filter
-} from 'lucide-react';
+import { Sparkles, CalendarCheck } from 'lucide-react';
 import { EVENT_DATA, AgendaItem } from '../data/eventData';
 
 export const AgendaSection: React.FC = () => {
@@ -25,50 +14,19 @@ export const AgendaSection: React.FC = () => {
   });
 
   const getCategoryBadge = (category: AgendaItem['category']) => {
-    switch (category) {
-      case 'Registration':
-        return (
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
-            <CheckCircle2 className="w-3 h-3" />
-            <span>Check-in</span>
-          </span>
-        );
-      case 'Keynote':
-        return (
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">
-            <Layers className="w-3 h-3" />
-            <span>Orientation</span>
-          </span>
-        );
-      case 'Demo':
-        return (
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">
-            <Sparkles className="w-3 h-3 text-nerd-green" />
-            <span>Live Demonstration</span>
-          </span>
-        );
-      case 'Break':
-        return (
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">
-            <Coffee className="w-3 h-3 text-amber-600" />
-            <span>Refreshments</span>
-          </span>
-        );
-      case 'Q&A':
-        return (
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-200 font-semibold">
-            <MessageCircleQuestion className="w-3 h-3 text-pink-600" />
-            <span>Interactive Q&A</span>
-          </span>
-        );
-      case 'Networking':
-        return (
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-neutral-100 text-neutral-800 border border-neutral-200">
-            <Users className="w-3 h-3 text-neutral-600" />
-            <span>Community Mixer</span>
-          </span>
-        );
-    }
+    const labels: Record<AgendaItem['category'], string> = {
+      Registration: 'Check-in',
+      Keynote: 'Keynote',
+      Demo: 'Live demo',
+      Break: 'Break',
+      'Q&A': 'Q&A',
+      Networking: 'Networking',
+    };
+    return (
+      <span className="inline-flex items-center rounded-md bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-800">
+        {labels[category]}
+      </span>
+    );
   };
 
   return (
@@ -84,7 +42,7 @@ export const AgendaSection: React.FC = () => {
             <span className="text-xs font-mono text-notion-faint">// 03</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-notion-text">
+          <h2 className="section-title">
             Event Agenda
           </h2>
 
@@ -142,6 +100,15 @@ export const AgendaSection: React.FC = () => {
               <div
                 key={item.id}
                 onClick={() => setActiveSessionId(item.id)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setActiveSessionId(item.id);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isSelected}
                 className={`relative group cursor-pointer transition-all ${
                   item.highlight ? 'opacity-100' : 'opacity-95'
                 }`}
@@ -172,7 +139,7 @@ export const AgendaSection: React.FC = () => {
                 {/* Session Card */}
                 <div
                   className={`p-5 sm:p-6 rounded-2xl border transition-all duration-200 ${
-                    item.highlight
+                      isSelected
                       ? 'bg-white border-emerald-300 shadow-notion hover:border-emerald-400'
                       : 'bg-white border-notion-border shadow-xs hover:border-notion-borderHover'
                   }`}
@@ -185,7 +152,7 @@ export const AgendaSection: React.FC = () => {
                       </span>
                     </div>
 
-                    <span className="font-mono text-[10px] text-notion-faint uppercase">
+                    <span className="font-mono text-xs text-notion-faint uppercase">
                       Session 0{index + 1}
                     </span>
                   </div>
@@ -225,4 +192,3 @@ export const AgendaSection: React.FC = () => {
     </section>
   );
 };
-

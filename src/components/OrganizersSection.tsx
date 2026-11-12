@@ -16,7 +16,7 @@ export const OrganizersSection: React.FC = () => {
             <span className="text-xs font-mono text-notion-faint">// 05</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-notion-text">
+          <h2 className="section-title">
             Organizers & Community Partners
           </h2>
 
@@ -115,7 +115,11 @@ export const OrganizersSection: React.FC = () => {
                 key={org.name}
                 className="p-5 rounded-xl bg-[#FAF9F6] border border-notion-border hover:border-notion-borderHover hover:bg-white transition-all text-center space-y-3 group"
               >
-                <div className="mx-auto w-14 h-14 rounded-full bg-white border border-notion-border shadow-xs flex items-center justify-center font-mono font-bold text-base text-notion-text group-hover:scale-105 transition-transform">
+                <div
+                  role="img"
+                  aria-label={`${org.name} initials avatar`}
+                  className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border-2 border-emerald-100 bg-emerald-50 font-mono text-base font-bold text-emerald-800 shadow-xs transition-transform group-hover:scale-105"
+                >
                   {org.initials}
                 </div>
 
@@ -155,4 +159,3 @@ export const OrganizersSection: React.FC = () => {
     </section>
   );
 };
-

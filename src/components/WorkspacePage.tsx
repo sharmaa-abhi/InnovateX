@@ -301,12 +301,6 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
 
             <div className="agenda-journey" aria-label="Event agenda timeline">
-              <span className="agenda-journey__decoration agenda-journey__decoration--sparkle" aria-hidden="true">
-                ✦
-              </span>
-              <span className="agenda-journey__decoration agenda-journey__decoration--pixel" aria-hidden="true">
-                ▪ ▫
-              </span>
               <div className="agenda-journey__line" aria-hidden="true">
                 <span style={{ height: `${timelineProgress}%` }} />
               </div>

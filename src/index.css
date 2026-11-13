@@ -652,7 +652,7 @@ button {
 .agenda-journey {
   position: relative;
   width: min(100%, 700px);
-  margin: 72px auto 0;
+  margin: 124px auto 0;
   padding: 0 0 18px;
 }
 
@@ -743,25 +743,6 @@ button {
   font-size: clamp(19px, 2.5vw, 25px);
   font-weight: 650;
   letter-spacing: -0.02em;
-}
-
-.agenda-journey__decoration {
-  position: absolute;
-  color: #777;
-  font-size: 22px;
-  pointer-events: none;
-}
-
-.agenda-journey__decoration--sparkle {
-  top: 6px;
-  right: -52px;
-}
-
-.agenda-journey__decoration--pixel {
-  bottom: 2px;
-  left: -60px;
-  font-size: 18px;
-  letter-spacing: 8px;
 }
 
 .workspace-tag {
@@ -1090,7 +1071,7 @@ button {
   }
 
   .agenda-journey {
-    margin-top: 52px;
+    margin-top: 88px;
   }
 
   .agenda-journey__line {
@@ -1115,10 +1096,6 @@ button {
 
   .agenda-journey__content h3 {
     font-size: 18px;
-  }
-
-  .agenda-journey__decoration {
-    display: none;
   }
 
   .workspace-property {

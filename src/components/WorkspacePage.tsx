@@ -267,7 +267,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             <div>
               <strong>Friday, 27 November 2026 · 11:00 AM onwards</strong>
               <p>
-                <MapPin size={14} /> Satyug Darshan Institute
+                <MapPin size={14} /> {EVENT_DATA.meta.venueName}, {EVENT_DATA.meta.venueCity}
               </p>
             </div>
             <span className="workspace-tag workspace-tag--green">Free · Host approval</span>
@@ -339,30 +339,30 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
 
             <div className="workspace-database" role="table" aria-label="Event agenda">
               <div className="workspace-database__head" role="row">
-                <span>Session</span>
-                <span>Time</span>
-                <span>Category</span>
-                <span>Venue</span>
+                <span role="columnheader">Session</span>
+                <span role="columnheader">Time</span>
+                <span role="columnheader">Category</span>
+                <span role="columnheader">Venue</span>
               </div>
               {filteredAgenda.map((item) => (
                 <div className="workspace-database__row" role="row" key={item.id}>
-                  <div className="workspace-database__title">
+                  <div className="workspace-database__title" role="cell">
                     <BookOpen size={16} />
                     <div>
                       <strong>{item.title}</strong>
                       <p>{item.description}</p>
                     </div>
                   </div>
-                  <div className="workspace-property">
+                  <div className="workspace-property" role="cell">
                     <Clock3 size={14} /> {item.time}
                   </div>
-                  <div>
+                  <div role="cell">
                     <span className={`workspace-tag workspace-tag--${item.highlight ? 'blue' : 'neutral'}`}>
                       {categoryLabels[item.category]}
                     </span>
                   </div>
-                  <div className="workspace-property">
-                    <MapPin size={14} /> Satyug Darshan Institute
+                  <div className="workspace-property" role="cell">
+                    <MapPin size={14} /> {EVENT_DATA.meta.venueName}, {EVENT_DATA.meta.venueCity}
                   </div>
                 </div>
               ))}
@@ -416,7 +416,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
           <section id="venue" className="workspace-section workspace-location">
             <div>
               <p className="workspace-kicker">05 · Event note</p>
-              <h2>Meet us at Satyug Darshan Institute.</h2>
+              <h2>Meet us at {EVENT_DATA.meta.venueName}, {EVENT_DATA.meta.venueCity}.</h2>
               <p className="workspace-prose">
                 Save the date and bring your curiosity. The venue details and community updates will stay organized here.
               </p>

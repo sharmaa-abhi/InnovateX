@@ -851,9 +851,9 @@ button {
 
 .workspace-register__banner {
   display: block;
-  width: min(100%, 360px);
+  width: min(100%, 900px);
   height: auto;
-  margin: -20px auto 28px;
+  margin: -24px auto 34px;
   border: 1px solid var(--border);
   border-radius: 12px;
   object-fit: cover;
@@ -1093,7 +1093,7 @@ button {
   }
 
   .workspace-register__banner {
-    width: min(100%, 320px);
+    width: 100%;
     margin-top: -8px;
   }
 

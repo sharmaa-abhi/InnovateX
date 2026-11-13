@@ -12,7 +12,7 @@
   }
 
   .btn-secondary {
-    @apply btn border border-notion-border bg-white px-5 py-3 text-sm text-notion-text shadow-xs hover:border-notion-borderHover hover:bg-[#F9F8F5];
+    @apply btn border border-notion-border bg-white px-5 py-3 text-sm text-notion-text shadow-sm hover:border-notion-borderHover hover:bg-[#F9F8F5];
   }
 
   .btn-outline {

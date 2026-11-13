@@ -399,6 +399,13 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
           </section>
 
           <section id="register" className="workspace-register reveal-on-scroll">
+            <img
+              src="/assets/notion-unlocked-banner.png"
+              alt="Notion Unlocked event banner"
+              className="workspace-register__banner"
+              loading="lazy"
+              decoding="async"
+            />
             <div className="workspace-page-icon workspace-page-icon--small">✦</div>
             <p className="workspace-kicker">Join the workspace</p>
             <h2>Join the Notion Unlocked × Nerds Room Community.</h2>

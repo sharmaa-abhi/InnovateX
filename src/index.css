@@ -422,6 +422,21 @@ button {
   margin-top: 26px;
 }
 
+.workspace-hero-banner {
+  margin: 0 0 34px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 14px 32px rgba(13, 13, 13, 0.08);
+}
+
+.workspace-hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .workspace-callout {
   display: flex;
   align-items: center;
@@ -849,17 +864,6 @@ button {
   text-align: center;
 }
 
-.workspace-register__banner {
-  display: block;
-  width: min(100%, 900px);
-  height: auto;
-  margin: -24px auto 34px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 12px 28px rgba(13, 13, 13, 0.08);
-}
-
 .workspace-page-icon--small {
   width: 40px;
   height: 40px;
@@ -1090,11 +1094,6 @@ button {
   .workspace-register {
     margin-top: 72px;
     padding: 42px 18px;
-  }
-
-  .workspace-register__banner {
-    width: 100%;
-    margin-top: -8px;
   }
 
   .workspace-footer {

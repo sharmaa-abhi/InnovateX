@@ -208,6 +208,15 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
           </section>
 
+          <section className="workspace-hero-banner reveal-on-scroll" aria-label="Notion Unlocked community banner">
+            <img
+              src="/assets/Notion%20Unlocked%20Community%20Event%20Banner.png"
+              alt="Notion Unlocked community event banner"
+              loading="eager"
+              decoding="async"
+            />
+          </section>
+
           <section className="workspace-callout reveal-on-scroll" aria-label="Event details">
             <CalendarDays size={20} />
             <div>
@@ -399,13 +408,6 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
           </section>
 
           <section id="register" className="workspace-register reveal-on-scroll">
-            <img
-              src="/assets/Notion%20Unlocked%20Community%20Event%20Banner.png"
-              alt="Notion Unlocked community event banner"
-              className="workspace-register__banner"
-              loading="lazy"
-              decoding="async"
-            />
             <p className="workspace-kicker">Join the workspace</p>
             <h2>Join the Notion Unlocked × Nerds Room Community.</h2>
             <p>Learn. Build. Organize. Together.</p>

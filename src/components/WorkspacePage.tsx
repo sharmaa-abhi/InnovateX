@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   ArrowUpRight,
-  BookOpen,
   CalendarDays,
   ChevronDown,
   ChevronRight,
-  Clock3,
   ExternalLink,
   Folder,
   HelpCircle,
@@ -17,7 +15,7 @@ import {
   Sparkles,
   Users,
 } from 'lucide-react';
-import { EVENT_DATA, AgendaItem } from '../data/eventData';
+import { EVENT_DATA } from '../data/eventData';
 
 interface WorkspacePageProps {
   onRegisterClick?: () => void;
@@ -54,14 +52,15 @@ const faqs = [
   },
 ];
 
-const categoryLabels: Record<AgendaItem['category'], string> = {
-  Registration: 'Check-in',
-  Keynote: 'Keynote',
-  Demo: 'Demo',
-  Break: 'Break',
-  'Q&A': 'Q&A',
-  Networking: 'Networking',
-};
+const agendaTimeline = [
+  { number: '01', time: '12:00 PM – 12:30 PM', title: 'Registration & Welcome' },
+  { number: '02', time: '12:30 PM – 12:50 PM', title: 'Introduction to Notion' },
+  { number: '03', time: '12:50 PM – 1:40 PM', title: 'Notion in Action' },
+  { number: '04', time: '1:40 PM – 2:30 PM', title: 'Notion AI & Agents' },
+  { number: '05', time: '2:30 PM – 2:50 PM', title: 'Refreshments & Networking' },
+  { number: '06', time: '2:50 PM – 3:25 PM', title: 'Interactive Q&A' },
+  { number: '07', time: '3:25 PM – 4:00 PM', title: 'Networking & Closing' },
+];
 
 function ToggleBlock({
   question,
@@ -103,33 +102,52 @@ function ToggleBlock({
 
 export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick }) => {
   const [navOpen, setNavOpen] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<'All' | 'Demos' | 'Networking'>('All');
   const [openFaq, setOpenFaq] = useState(0);
   const [uniqueOpen, setUniqueOpen] = useState(true);
+  const [timelineItemsVisible, setTimelineItemsVisible] = useState<number[]>([]);
+  const [timelineProgress, setTimelineProgress] = useState(0);
+  const timelineItemsRef = useRef<Array<HTMLLIElement | null>>([]);
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>('.reveal-on-scroll');
-    const observer = new IntersectionObserver(
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
+            revealObserver.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.12 }
     );
 
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    elements.forEach((element) => revealObserver.observe(element));
+    return () => revealObserver.disconnect();
   }, []);
 
-  const filteredAgenda = EVENT_DATA.agenda.filter((item) => {
-    if (activeFilter === 'All') return true;
-    if (activeFilter === 'Demos') return item.category === 'Demo' || item.category === 'Keynote';
-    return ['Networking', 'Registration', 'Break', 'Q&A'].includes(item.category);
-  });
+  useEffect(() => {
+    const timelineObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const index = Number((entry.target as HTMLElement).dataset.timelineIndex);
+          setTimelineItemsVisible((visibleItems) =>
+            visibleItems.includes(index) ? visibleItems : [...visibleItems, index].sort((a, b) => a - b)
+          );
+          setTimelineProgress((progress) => Math.max(progress, ((index + 1) / agendaTimeline.length) * 100));
+        });
+      },
+      { threshold: 0.45, rootMargin: '0px 0px -12% 0px' }
+    );
+
+    timelineItemsRef.current.forEach((item) => {
+      if (item) timelineObserver.observe(item);
+    });
+
+    return () => timelineObserver.disconnect();
+  }, []);
 
   const register = () => {
     onRegisterClick?.();
@@ -272,55 +290,52 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
           </section>
 
           <section id="agenda" className="workspace-section reveal-on-scroll">
-            <div className="workspace-section-heading">
-              <div>
-                <p className="workspace-kicker">02 · Database</p>
-                <h2>Event agenda</h2>
-                <p className="workspace-prose">A clear run of show for learning, building and connecting.</p>
-              </div>
-              <div className="workspace-filter" role="group" aria-label="Filter agenda">
-                {(['All', 'Demos', 'Networking'] as const).map((filter) => (
-                  <button
-                    type="button"
-                    key={filter}
-                    className={activeFilter === filter ? 'workspace-filter__button workspace-filter__button--active' : 'workspace-filter__button'}
-                    onClick={() => setActiveFilter(filter)}
-                  >
-                    {filter === 'All' ? 'All sessions' : filter}
-                  </button>
-                ))}
-              </div>
+            <div className="agenda-journey__header">
+              <p className="workspace-kicker">NOTION UNLOCKED × NERDS ROOM</p>
+              <p className="agenda-journey__label">EVENT AGENDA</p>
+              <h2>The Journey</h2>
+              <p>
+                A well-curated lineup of sessions, demos and interactions designed to help you get the most out of
+                Notion.
+              </p>
             </div>
 
-            <div className="workspace-database" role="table" aria-label="Event agenda">
-              <div className="workspace-database__head" role="row">
-                <span role="columnheader">Session</span>
-                <span role="columnheader">Time</span>
-                <span role="columnheader">Category</span>
-                <span role="columnheader">Venue</span>
+            <div className="agenda-journey" aria-label="Event agenda timeline">
+              <span className="agenda-journey__decoration agenda-journey__decoration--sparkle" aria-hidden="true">
+                ✦
+              </span>
+              <span className="agenda-journey__decoration agenda-journey__decoration--pixel" aria-hidden="true">
+                ▪ ▫
+              </span>
+              <div className="agenda-journey__line" aria-hidden="true">
+                <span style={{ height: `${timelineProgress}%` }} />
               </div>
-              {filteredAgenda.map((item) => (
-                <div className="workspace-database__row" role="row" key={item.id}>
-                  <div className="workspace-database__title" role="cell">
-                    <BookOpen size={16} />
-                    <div>
-                      <strong>{item.title}</strong>
-                      <p>{item.description}</p>
-                    </div>
-                  </div>
-                  <div className="workspace-property" role="cell">
-                    <Clock3 size={14} /> {item.time}
-                  </div>
-                  <div role="cell">
-                    <span className={`workspace-tag workspace-tag--${item.highlight ? 'blue' : 'neutral'}`}>
-                      {categoryLabels[item.category]}
-                    </span>
-                  </div>
-                  <div className="workspace-property" role="cell">
-                    <MapPin size={14} /> {EVENT_DATA.meta.venueName}, {EVENT_DATA.meta.venueCity}
-                  </div>
-                </div>
-              ))}
+              <ol className="agenda-journey__list">
+                {agendaTimeline.map((item, index) => {
+                  const isVisible = timelineItemsVisible.includes(index);
+                  const isActive = index === Math.max(...timelineItemsVisible, -1);
+                  return (
+                    <li
+                      key={item.number}
+                      ref={(element) => {
+                        timelineItemsRef.current[index] = element;
+                      }}
+                      data-timeline-index={index}
+                      className={`agenda-journey__item ${isVisible ? 'agenda-journey__item--visible' : ''} ${
+                        isActive ? 'agenda-journey__item--active' : ''
+                      }`}
+                    >
+                      <span className="agenda-journey__number" aria-hidden="true">
+                        {item.number}
+                      </span>
+                      <div className="agenda-journey__content">
+                        <time>{item.time}</time>
+                        <h3>{item.title}</h3>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
           </section>
 

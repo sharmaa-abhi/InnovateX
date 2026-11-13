@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowUpRight,
   BookOpen,
@@ -7,7 +7,6 @@ import {
   ChevronRight,
   Clock3,
   ExternalLink,
-  FileText,
   Folder,
   HelpCircle,
   Home,
@@ -15,12 +14,8 @@ import {
   MapPin,
   Menu,
   Network,
-  PanelLeftClose,
-  PanelLeftOpen,
-  Search,
   Sparkles,
   Users,
-  X,
 } from 'lucide-react';
 import { EVENT_DATA, AgendaItem } from '../data/eventData';
 
@@ -107,11 +102,28 @@ function ToggleBlock({
 }
 
 export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState<'All' | 'Demos' | 'Networking'>('All');
   const [openFaq, setOpenFaq] = useState(0);
   const [uniqueOpen, setUniqueOpen] = useState(true);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll<HTMLElement>('.reveal-on-scroll');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
 
   const filteredAgenda = EVENT_DATA.agenda.filter((item) => {
     if (activeFilter === 'All') return true;
@@ -125,105 +137,39 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
 
   return (
     <div className="workspace-app">
-      {sidebarOpen && (
-        <button
-          type="button"
-          className="workspace-sidebar__backdrop lg:hidden"
-          aria-label="Close navigation"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      <aside
-        className={`workspace-sidebar ${sidebarCollapsed ? 'workspace-sidebar--collapsed' : ''} ${
-          sidebarOpen ? 'workspace-sidebar--mobile-open' : ''
-        }`}
-      >
-        <div className="workspace-sidebar__header">
-          <a href="#overview" className="workspace-brand" onClick={() => setSidebarOpen(false)}>
-            <span className="workspace-brand__icon">✦</span>
-            {!sidebarCollapsed && (
+      <div className="workspace-main">
+        <header className="workspace-topbar">
+          <div className="flex min-w-0 items-center gap-2">
+            <a href="#overview" className="workspace-brand">
+              <span className="workspace-brand__icon">✦</span>
               <span>
                 <strong>Nerds Room</strong>
                 <small>Notion Unlocked</small>
               </span>
-            )}
-          </a>
-          <button
-            type="button"
-            className="workspace-icon-button hidden lg:inline-flex"
-            aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            onClick={() => setSidebarCollapsed((collapsed) => !collapsed)}
-          >
-            {sidebarCollapsed ? <PanelLeftOpen size={17} /> : <PanelLeftClose size={17} />}
-          </button>
-          <button
-            type="button"
-            className="workspace-icon-button lg:hidden"
-            aria-label="Close navigation"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <X size={17} />
-          </button>
-        </div>
-
-        <div className="workspace-sidebar__section">
-          {!sidebarCollapsed && <p className="workspace-sidebar__label">Workspace</p>}
-          <nav aria-label="Workspace navigation" className="space-y-1">
-            {navigation.map(({ label, href, icon: Icon }) => (
-              <a
-                key={label}
-                href={href}
-                className={`workspace-nav-link ${label === 'Overview' ? 'workspace-nav-link--active' : ''}`}
-                title={sidebarCollapsed ? label : undefined}
-                onClick={() => setSidebarOpen(false)}
-              >
-                <Icon size={17} />
-                {!sidebarCollapsed && <span>{label}</span>}
-              </a>
-            ))}
-          </nav>
-        </div>
-
-        {!sidebarCollapsed && (
-          <div className="workspace-sidebar__section workspace-sidebar__section--bottom">
-            <p className="workspace-sidebar__label">Pages</p>
-            <a href="#experience" className="workspace-page-link">
-              <FileText size={16} />
-              <span>What you'll experience</span>
             </a>
-            <a href="#venue" className="workspace-page-link">
-              <MapPin size={16} />
-              <span>Venue & notes</span>
-            </a>
-            <div className="workspace-sidebar__community">
-              <span className="workspace-status-dot" />
-              <span>Community workspace</span>
-            </div>
-          </div>
-        )}
-      </aside>
-
-      <div className="workspace-main">
-        <header className="workspace-topbar">
-          <div className="flex min-w-0 items-center gap-2">
-            <button
-              type="button"
-              className="workspace-icon-button lg:hidden"
-              aria-label="Open navigation"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu size={19} />
-            </button>
             <div className="workspace-breadcrumb">
-              <span className="hidden sm:inline">Nerds Room</span>
+              <span className="hidden sm:inline">Workspace</span>
               <ChevronRight size={14} />
               <span className="truncate">Notion Unlocked</span>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <button type="button" className="workspace-icon-button hidden sm:inline-flex" aria-label="Search workspace">
-              <Search size={17} />
+          <nav className={`workspace-topnav ${navOpen ? 'workspace-topnav--open' : ''}`} aria-label="Primary navigation">
+            {navigation.map(({ label, href, icon: Icon }) => (
+              <a key={label} href={href} onClick={() => setNavOpen(false)}>
+                <Icon size={15} />
+                <span>{label}</span>
+              </a>
+            ))}
+          </nav>
+          <div className="workspace-topbar__actions">
+            <button
+              type="button"
+              className="workspace-icon-button workspace-menu-button"
+              aria-label={navOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={navOpen}
+              onClick={() => setNavOpen((open) => !open)}
+            >
+              {navOpen ? <ChevronDown size={18} /> : <Menu size={18} />}
             </button>
             <a
               href={EVENT_DATA.meta.registrationUrl}
@@ -238,7 +184,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
         </header>
 
         <main className="workspace-content">
-          <section id="overview" className="workspace-page-header">
+          <section id="overview" className="workspace-page-header reveal-on-scroll is-visible">
             <div className="workspace-page-icon">✦</div>
             <div className="workspace-eyebrow">EVENT PAGE · 27 NOV 2026</div>
             <h1>Notion Unlocked × Nerds Room</h1>
@@ -262,7 +208,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
           </section>
 
-          <section className="workspace-callout" aria-label="Event details">
+          <section className="workspace-callout reveal-on-scroll" aria-label="Event details">
             <CalendarDays size={20} />
             <div>
               <strong>Friday, 27 November 2026 · 11:00 AM onwards</strong>
@@ -275,7 +221,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
 
           <div className="workspace-divider" />
 
-          <section id="experience" className="workspace-section workspace-two-column">
+          <section id="experience" className="workspace-section workspace-two-column reveal-on-scroll">
             <div>
               <p className="workspace-kicker">01 · About this page</p>
               <h2>Rethink the way you work with Notion.</h2>
@@ -316,7 +262,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
           </section>
 
-          <section id="agenda" className="workspace-section">
+          <section id="agenda" className="workspace-section reveal-on-scroll">
             <div className="workspace-section-heading">
               <div>
                 <p className="workspace-kicker">02 · Database</p>
@@ -369,7 +315,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
           </section>
 
-          <section id="audience" className="workspace-section">
+          <section id="audience" className="workspace-section reveal-on-scroll">
             <div className="workspace-section-heading">
               <div>
                 <p className="workspace-kicker">03 · People</p>
@@ -390,7 +336,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
           </section>
 
-          <section id="team" className="workspace-section">
+          <section id="team" className="workspace-section reveal-on-scroll">
             <div className="workspace-section-heading">
               <div>
                 <p className="workspace-kicker">04 · Directory</p>
@@ -413,7 +359,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
           </section>
 
-          <section id="venue" className="workspace-section workspace-location">
+          <section id="venue" className="workspace-section workspace-location reveal-on-scroll">
             <div>
               <p className="workspace-kicker">05 · Event note</p>
               <h2>Meet us at {EVENT_DATA.meta.venueName}, {EVENT_DATA.meta.venueCity}.</h2>
@@ -431,7 +377,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </a>
           </section>
 
-          <section id="faq" className="workspace-section">
+          <section id="faq" className="workspace-section reveal-on-scroll">
             <div className="workspace-section-heading">
               <div>
                 <p className="workspace-kicker">06 · Help</p>
@@ -452,7 +398,7 @@ export const WorkspacePage: React.FC<WorkspacePageProps> = ({ onRegisterClick })
             </div>
           </section>
 
-          <section id="register" className="workspace-register">
+          <section id="register" className="workspace-register reveal-on-scroll">
             <div className="workspace-page-icon workspace-page-icon--small">✦</div>
             <p className="workspace-kicker">Join the workspace</p>
             <h2>Join the Notion Unlocked × Nerds Room Community.</h2>
